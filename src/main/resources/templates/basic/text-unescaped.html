@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<h1>text vs utext</h1>
+<ul>
+  <li>th:text = <span th:text="${data}"></span></li>
+  <li>th:utext = <span th:utext="${data}"></span></li>
+</ul>
+<h1><span th:inline="none">[[...]] vs [(...)]</span></h1>
+<ul>
+  <li><span th:inline="none">[[...]] = </span>[[${data}]]</li>
+  <li><span th:inline="none">[(...)] = </span>[(${data})]</li>
+</ul>
+</body>
+</html>
+<!--
+타임리프가 제공하는 th:text 는 기본적으로 이스케이프(escape)를 제공한다.
+ex)
+< 는 lt;
+> 는 gt;
+따라서 이스케이프 기능을 사용하지 않으려면 th:utext 를 사용해야 한다.
+-->
