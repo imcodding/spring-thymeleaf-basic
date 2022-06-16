@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- 자바스크립트 인라인 사용 전 -->
+<script>
+    var username = [[${user.username}]]; //User1
+    var age = [[${user.age}]] //10;
+    //자바스크립트 내추럴 템플릿
+    var username2 = /*[[${user.username}]]*/ "test username"; //"test username"
+    //객체
+    var user = [[${user}]]; //BasicController.User(username=User1, age=10)
+</script>
+<!-- 자바스크립트 인라인 사용 후 -->
+<script th:inline="javascript">
+    var username = [[${user.username}]];
+    var age = [[${user.age}]] //10;
+    //자바스크립트 내추럴 템플릿
+    var username2 = /*[[${user.username}]]*/ "test username"; //"User1"
+    //객체
+    var user = [[${user}]]; //{"username":"User1","age":10}
+</script>
+<!-- 자바스크립트 인라인 each -->
+<script th:inline="javascript">
+    [# th:each="user, stat : ${users}"]
+    var user[[${stat.count}]] = [[${user}]];
+    [/]
+</script>
+</body>
+</html>
