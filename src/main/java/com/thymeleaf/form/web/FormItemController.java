@@ -2,7 +2,9 @@ package com.thymeleaf.form.web;
 
 import com.thymeleaf.form.domain.item.Item;
 import com.thymeleaf.form.domain.item.ItemRepository;
+import com.thymeleaf.form.domain.item.ItemType;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Controller
 @RequestMapping("/form/items")
 @RequiredArgsConstructor
@@ -28,6 +31,12 @@ public class FormItemController {
         regions.put("JEJU", "제주");
         return regions;
     }
+
+    @ModelAttribute("itemTypes")
+    public ItemType[] itemType() {
+        return ItemType.values();
+    }
+
     @GetMapping
     public String items(Model model) {
         List<Item> items = itemRepository.findAll();
@@ -50,6 +59,9 @@ public class FormItemController {
 
     @PostMapping("/add")
     public String addItem(@ModelAttribute Item item, RedirectAttributes redirectAttributes) {
+
+        log.info("item.itemType={}", item.getItemType());
+
         Item savedItem = itemRepository.save(item);
         redirectAttributes.addAttribute("itemId", savedItem.getId());
         redirectAttributes.addAttribute("status", true);
