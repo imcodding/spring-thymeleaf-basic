@@ -1,5 +1,6 @@
 package com.thymeleaf.form.web;
 
+import com.thymeleaf.form.domain.item.DeliveryCode;
 import com.thymeleaf.form.domain.item.Item;
 import com.thymeleaf.form.domain.item.ItemRepository;
 import com.thymeleaf.form.domain.item.ItemType;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +37,15 @@ public class FormItemController {
     @ModelAttribute("itemTypes")
     public ItemType[] itemType() {
         return ItemType.values();
+    }
+
+    @ModelAttribute("deliveryCodes") //매번 호출됨. 사실은 static 으로 한 번 선언해두고 공유해서 쓰는 것 권장.
+    public List<DeliveryCode> deliveryCodes() {
+        List<DeliveryCode> deliveryCodes = new ArrayList<>();
+        deliveryCodes.add(new DeliveryCode("FAST", "빠른 배송"));
+        deliveryCodes.add(new DeliveryCode("NORMAL", "일반 배송"));
+        deliveryCodes.add(new DeliveryCode("SLOW", "느린 배송"));
+        return deliveryCodes;
     }
 
     @GetMapping
